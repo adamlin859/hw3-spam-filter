@@ -37,3 +37,9 @@ Resources:
     DependsOn: BucketPermission
     Properties:
       BucketName: !Ref S3BucketName
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: 's3:ObjectCreated:Put'
+            Function: !GetAtt 
+              - spamFilter
+              - Arn      
