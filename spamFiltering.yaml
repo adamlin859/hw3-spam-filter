@@ -2,6 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: Spam Filtering
 Parameters:
+  SageMakerEndpointName:
+    Type: String
+    Default: "sms-spam-classifier-mxnet-2021-04-01-03-00-09-451"
   S3BucketName:
     Type: String
     Default: email-bucket-v2
@@ -13,13 +16,15 @@ Resources:
       Handler: lambda_function.lambda_handler
       Runtime: python3.8
       CodeUri: ./spam-filter
-      Description: "Lambda function for CD Demo"
+      Description: "Lambda function for Spam Filter"
       MemorySize: 128
       Timeout: 30
       Role: "arn:aws:iam::269578278636:role/admin-lambda-role"
       Environment:
         Variables:
           REGION: us-east-1
+          ENDPOINT:
+            Ref: SageMakerEndpointName
   BucketPermission:
     Type: 'AWS::Lambda::Permission'
     Properties:
