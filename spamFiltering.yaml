@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: Spam Filtering
+Parameters:
+  S3BucketName:
+    Type: String
+    Default: email-bucket-v2
 Resources:
   spamFilter:
     Type: "AWS::Serverless::Function"
@@ -20,11 +24,16 @@ Resources:
     Type: 'AWS::Lambda::Permission'
     Properties:
       Action: 'lambda:InvokeFunction'
-      FunctionName: !Ref spamFilter
+      FunctionName: 
+        Fn::GetAtt:
+          - spamFilter
+          - Arn
       Principal: s3.amazonaws.com
       SourceAccount: !Ref 'AWS::AccountId'
-      SourceArn: !Ref S3EmailBucket
+      SourceArn:
+        Fn::Sub: arn:aws:s3:::${S3BucketName}
   S3EmailBucket:
     Type: AWS::S3::Bucket
+    DependsOn: BucketPermission
     Properties:
-      BucketName: email-bucket-v2
+      BucketName: !Ref S3BucketName
