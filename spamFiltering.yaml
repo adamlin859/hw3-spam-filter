@@ -20,22 +20,12 @@ Resources:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: email-bucket-v3
-  spamBucketPolicy:
-    Type: 'AWS::S3::BucketPolicy'
-    Properties:
-      PolicyDocument:
-        Statement:
-          - Action:
-              - 's3:PutObject'
-            Sid: AllowSESPuts
-            Resource: !Join 
-              - ''
-              - - 'arn:aws:s3:::'
-                - !Ref emailBucket
-                - /*
-            Effect: Allow
-            Principal: '*'
-      Bucket: !Ref emailBucket
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: 's3:ObjectCreated:Put'
+            Function: !GetAtt 
+              - spamFilter
+              - Arn
   receiptRule:
     Type: 'AWS::SES::ReceiptRule'
     Properties:
