@@ -16,17 +16,4 @@ Resources:
       Environment:
         Variables:
           REGION: us-east-1
-  emailBucket:
-    Type: 'AWS::S3::Bucket'
-    Properties:
-      BucketName: email-bucket-v3
-  receiptRule:
-    Type: 'AWS::SES::ReceiptRule'
-    Properties:
-      Rule:
-        Name: spam
-        Actions:
-          - S3Action:
-              BucketName: !Ref emailBucket
-        Enabled: true
-      RuleSetName: default-rule-set
+
