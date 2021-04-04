@@ -16,4 +16,7 @@ Resources:
       Environment:
         Variables:
           REGION: us-east-1
-
+  S3EmailBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: email-bucket-v2
