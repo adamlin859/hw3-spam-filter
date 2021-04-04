@@ -20,3 +20,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: email-bucket-v2
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: 's3:ObjectCreated:Put'
+            Function: !GetAtt 
+              - spamFilter
+              - Arn
