@@ -43,3 +43,29 @@ Resources:
             Function: !GetAtt 
               - spamFilter
               - Arn      
+  spamBucketPolicy:
+    Type: 'AWS::S3::BucketPolicy'
+    Properties:
+      PolicyDocument:
+        Statement:
+          - Action:
+              - 's3:PutObject'
+            Sid: AllowSESPuts
+            Resource: !Join 
+              - ''
+              - - 'arn:aws:s3:::'
+                - !Ref S3EmailBucket
+                - /*
+            Effect: Allow
+            Principal: '*'
+      Bucket: !Ref S3EmailBucket
+  receiptRule:
+    Type: 'AWS::SES::ReceiptRule'
+    Properties:
+      Rule:
+        Name: spam
+        Actions:
+          - S3Action:
+              BucketName: !Ref S3EmailBucket
+        Enabled: true
+      RuleSetName: default-rule-set
