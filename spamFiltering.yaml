@@ -16,13 +16,15 @@ Resources:
       Environment:
         Variables:
           REGION: us-east-1
+  BucketPermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !Ref spamFilter
+      Principal: s3.amazonaws.com
+      SourceAccount: !Ref 'AWS::AccountId'
+      SourceArn: !Ref S3EmailBucket
   S3EmailBucket:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: email-bucket-v2
-      NotificationConfiguration:
-        LambdaConfigurations:
-          - Event: 's3:ObjectCreated:Put'
-            Function: !GetAtt 
-              - spamFilter
-              - Arn
