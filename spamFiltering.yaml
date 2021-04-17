@@ -74,6 +74,10 @@ Resources:
               BucketName: !Ref S3EmailBucket
         Enabled: true
       RuleSetName: default-rule-set
+  spamRuleSet:
+    Type: AWS::SES::ReceiptRuleSet
+    Properties: 
+      RuleSetName: spamfiltering
   LambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
