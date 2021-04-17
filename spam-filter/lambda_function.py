@@ -41,7 +41,7 @@ def lambda_handler(event, context):
     result = json.loads(result)
     
     classification = ["HAM", "SPAM"][int(result['predicted_label'][0][0])]
-    prob = result["predicted_probability"][0][1]
+    prob = result["predicted_probability"][0][0]
     
     BODY_TEXT = "We received your email sent at {} with the subject {}.\r\n".format(message['Date'], message['SUBJECT'])
     BODY_TEXT += "\r\nHere is a 240 character sample of the email body:\r\n"

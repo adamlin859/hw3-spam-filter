@@ -4,7 +4,7 @@ Description: Spam Filtering
 Parameters:
   SageMakerEndpointName:
     Type: String
-    Default: "sms-spam-classifier-mxnet-2021-04-01-03-00-09-451"
+    Default: "sms-spam-classifier-mxnet-2021-04-17-13-48-26-643"
   S3BucketName:
     Type: String
     Default: email-bucket-v2
