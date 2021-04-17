@@ -10,7 +10,7 @@ else:
     
 def vectorize_sequences(sequences, vocabulary_length):
     # results = np.zeros((len(sequences), vocabulary_length))
-    results = [[x for x in range(vocabulary_length)]]
+    results = [[0 for x in range(vocabulary_length)]]
     for sequence in sequences[0]:
         results[0][sequence] = 1.
     return results

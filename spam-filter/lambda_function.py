@@ -18,9 +18,11 @@ def lambda_handler(event, context):
     e = response['Body'].read()
     message = email.message_from_string(e.decode("utf-8"))
     msg_boday = message.get_payload()[0].get_payload().replace("\n"," ").replace("\r", " ") 
-    
+    print(msg_boday)
+
+
     ENDPOINT_NAME = os.environ['ENDPOINT']
-    one_hot_test_messages = one_hot_encode(msg_boday, vocabulary_length)
+    one_hot_test_messages = one_hot_encode([msg_boday], vocabulary_length)
     encoded_test_messages = vectorize_sequences(one_hot_test_messages, vocabulary_length)
     encoded_json_msg = json.dumps(encoded_test_messages)
     
